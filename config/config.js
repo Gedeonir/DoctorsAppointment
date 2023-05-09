@@ -1,5 +1,7 @@
-import 'dotenv/config'
-import mongoose from 'mongoose'
+const dotenv=require('dotenv')
+const mongoose=require('mongoose')
+
+dotenv.config();
 
 // add your own uri below
 const uri =
@@ -10,7 +12,7 @@ const uri =
             : process.env.MONGO_DEV_DB
 
 
-export const connect = async ()=> {
+const connect = async ()=> {
     try {
         //MONGODB CONNECTION
         await mongoose.connect(uri)
@@ -19,3 +21,5 @@ export const connect = async ()=> {
         process.exit(1)
     }
 }
+
+module.exports={connect}
