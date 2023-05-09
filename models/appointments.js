@@ -1,0 +1,49 @@
+"use strict";
+import mongoose, { Schema } from "mongoose";
+const Appointment = mongoose.model(
+  "appointments",
+  new Schema({
+    firstName: {
+      type: String,
+      required:true,
+    },
+    lastName: {
+      type: String,
+      required:true
+    },
+    email: {
+      type: String,
+    },
+    phone: {
+      type: String,
+      required:true
+    },
+    doctorId: {
+      type: mongoose.Schema.Types.ObjectId,
+        ref:"Users",
+        required:true
+    },
+    doctorName:{
+      type: String,
+     required:true
+    },
+    department:{
+      type:String
+    },
+    sessionDate:{
+      type:String
+    },
+    sessionTime:{
+      type: String,
+      required:true
+    },
+    status:{
+      type:String
+    },
+    createdAt:{
+      type:String
+    }
+  })
+);
+
+export {Appointment};
