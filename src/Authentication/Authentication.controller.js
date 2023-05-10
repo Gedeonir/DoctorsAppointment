@@ -29,7 +29,7 @@ const login = async (req, res) => {
     const user= await User.findOne({email:email });
 
     if (!user|| !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({
+      return res.status(400).json({
         message:"email or password don't match",
       });
     }
@@ -102,7 +102,7 @@ const resetPassword = async (req, res) => {
     const Token = req.params.token;
 
     if (!password) {
-      return res.status(401).json({
+      return res.status(400).json({
         message: "Password must not be empty",
       });
     }
@@ -114,7 +114,7 @@ const resetPassword = async (req, res) => {
     const user= await User.findOne({passwordResetToken: Token });
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(400).json({
         message: "Invalid token",
       });
     }
@@ -162,11 +162,11 @@ const changePassword = async (req, res) => {
     const password = await bcrypt.compare(oldpassword, user.password);
     if (!password) {
       return res
-        .status(401)
+        .status(400)
         .json({ message: "The old password is wrong, correct it and try again" });
     }
     if (newpassword1 !== newpassword2) {
-      return res.status(401).json({ message: "new password does not match" });
+      return res.status(400).json({ message: "new password does not match" });
     }
 
     //6.hash password
