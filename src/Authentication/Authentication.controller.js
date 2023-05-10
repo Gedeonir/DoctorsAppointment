@@ -145,14 +145,11 @@ const resetPassword = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
   try {
-    //1.Get token for logged in
-
-    const token = req.headers.authorization.split(" ")[1];
-
     //3.get Userfrom token by uuid
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRETE);
+    const decoded = await jwt.verify(token, process.env.JWT_SECRETE);
     const uuid = decoded.uuid;
     const user= await User.findOne({_id: uuid });
     //4.get password from reques body
