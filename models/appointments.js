@@ -3,6 +3,10 @@ import mongoose, { Schema } from "mongoose";
 const Appointment = mongoose.model(
   "appointments",
   new Schema({
+    document_id: {
+      type: String,
+      required:true,
+    },
     firstName: {
       type: String,
       required:true,

@@ -4,7 +4,7 @@ const swaggerUI = require("swagger-ui-express")
 const swaggerDocumentation = require("./src/docs/swagger.js")
 const departmentsRouter=require("./src/Departments/departments.route.js");
 const appoinmentRouter=require("./src/Appointments/Appointment.route.js");
-
+const authenticationRouter=require("./src/Authentication/Authentication.route.js")
 
 const app = express()
 app.use(express.json())
@@ -25,6 +25,7 @@ app.use(
 
 app.use("/api/v1/departments", departmentsRouter);
 app.use("/api/v1/appointments",appoinmentRouter);
+app.use("/api/v1/users",authenticationRouter);
 
 
 
