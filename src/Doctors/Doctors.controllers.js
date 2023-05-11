@@ -12,13 +12,11 @@ const registerDoctor = async (req, res) => {
     telNumber,
     departmentId,
     departmentName,
-    role,
-    password,
   } = req.body;
   try {
     const doctor = await Doctor.findOne({ email: email });
 
-    if (!firstName || !lastName || !gender || !email || !telNumber || !password) {
+    if (!firstName || !lastName || !gender || !email || !telNumber ) {
       return res.status(403).json({
         message: "All fields are required",
       });
@@ -30,7 +28,6 @@ const registerDoctor = async (req, res) => {
       });
     }
     const newDoctor = await Doctor.create({
-      title,
       firstName,
       lastName,
       gender,
@@ -38,8 +35,6 @@ const registerDoctor = async (req, res) => {
       telNumber,
       departmentId,
       departmentName,
-      role,
-      password,
     });
 
     return res.status(200).json({
@@ -113,7 +108,6 @@ const deleteDoctor = async (req, res) => {
 const updateDoctor = async (req, res) => {
   const uuid = req.params.docId;
   const {
-    title,
     firstName,
     lastName,
     gender,
@@ -121,8 +115,6 @@ const updateDoctor = async (req, res) => {
     telNumber,
     departmentId,
     departmentName,
-    role,
-    password,
   } = req.body;
 
   try {
@@ -134,7 +126,6 @@ const updateDoctor = async (req, res) => {
       });
     }
 
-    doctor.title = title;
     doctor.firstName = firstName;
     doctor.lastName = lastName;
     doctor.gender = gender;
@@ -142,8 +133,6 @@ const updateDoctor = async (req, res) => {
     doctor.telNumber = telNumber;
     doctor.departmentId = departmentId;
     doctor.departmentName = departmentName;
-    doctor.role = role;
-    doctor.password = password;
     await doctor.save();
 
     return res.status(200).json({
