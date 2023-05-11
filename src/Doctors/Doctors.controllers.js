@@ -4,7 +4,6 @@ const {Doctor}=require('../../models/doctors.js')
 
 const registerDoctor = async (req, res) => {
   const {
-    title,
     firstName,
     lastName,
     gender,
@@ -12,11 +11,13 @@ const registerDoctor = async (req, res) => {
     telNumber,
     departmentId,
     departmentName,
+    availableDays
+  
   } = req.body;
   try {
     const doctor = await Doctor.findOne({ email: email });
 
-    if (!firstName || !lastName || !gender || !email || !telNumber ) {
+    if (!firstName || !lastName || !gender || !email || !telNumber || !availableDays) {
       return res.status(403).json({
         message: "All fields are required",
       });
@@ -35,6 +36,7 @@ const registerDoctor = async (req, res) => {
       telNumber,
       departmentId,
       departmentName,
+      availableDays
     });
 
     return res.status(200).json({
@@ -115,6 +117,7 @@ const updateDoctor = async (req, res) => {
     telNumber,
     departmentId,
     departmentName,
+    availableDays
   } = req.body;
 
   try {
@@ -133,6 +136,7 @@ const updateDoctor = async (req, res) => {
     doctor.telNumber = telNumber;
     doctor.departmentId = departmentId;
     doctor.departmentName = departmentName;
+    doctor.availableDays = availableDays;
     await doctor.save();
 
     return res.status(200).json({
