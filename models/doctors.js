@@ -64,4 +64,4 @@ const Doctor = mongoose.model(
     }
   })
 );
-export {Doctor};
+module.exports={Doctor};

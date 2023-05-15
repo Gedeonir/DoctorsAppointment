@@ -51,4 +51,4 @@ const Appointment = mongoose.model(
   })
 );
 
-export {Appointment};
+module.exports={Appointment};

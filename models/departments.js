@@ -18,4 +18,4 @@ const Department = mongoose.model(
 
     })
   );
-  export {Department};
+  module.exports={Department};
