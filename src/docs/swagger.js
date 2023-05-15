@@ -1,6 +1,7 @@
-import 'dotenv/config'
+const dotenv = require("dotenv");
 const PORT = process.env.PORT || 5000;
 const AuthenticationRoutes=require('../Authentication/AuthenticationDocs.js')
+dotenv.config();
 
 const swaggerDoc = {
     openapi: "3.0.0",

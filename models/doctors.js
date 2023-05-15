@@ -1,5 +1,6 @@
 "use strict";
-import mongoose, { Schema } from "mongoose";
+const mongoose=require("mongoose")
+const { Schema }=require("mongoose");
 const Doctor = mongoose.model(
   "doctors",
   new Schema({
@@ -63,4 +64,4 @@ const Doctor = mongoose.model(
     }
   })
 );
-export {Doctor};
+module.exports={Doctor};

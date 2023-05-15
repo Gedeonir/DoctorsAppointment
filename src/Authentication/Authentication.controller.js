@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {User} from "../../models/users";
+const {User}=require("../../models/users");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/Email");
 const bcrypt = require("bcryptjs");

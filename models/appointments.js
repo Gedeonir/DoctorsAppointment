@@ -1,5 +1,6 @@
 "use strict";
-import mongoose, { Schema } from "mongoose";
+const mongoose=require("mongoose"); 
+const { Schema }=require("mongoose");
 const Appointment = mongoose.model(
   "appointments",
   new Schema({
@@ -50,4 +51,4 @@ const Appointment = mongoose.model(
   })
 );
 
-export {Appointment};
+module.exports={Appointment};
