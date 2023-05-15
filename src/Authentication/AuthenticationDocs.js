@@ -1,4 +1,5 @@
-import "dotenv/config"
+const dotenv = require("dotenv");
+dotenv.config();
 
 const Email = process.env.USER_EMAIL;
 const Password = process.env.USER_PASSWORD;
