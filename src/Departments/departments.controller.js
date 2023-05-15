@@ -6,13 +6,13 @@ const registerDepartment=async(req,res)=>{
         const department=await Department.findOne({departmentName:departmentName});
 
         if (!departmentName||!session_lenght||!fees) {
-            return res.status(403).json({
+            return res.status(400).json({
                 message:"All fields are required"
             });
         }
 
         if (department) {
-            return res.status(403).json({
+            return res.status(400).json({
                 message:'Department Already exists',
             });
         }
@@ -99,16 +99,6 @@ const updateDepartment=async(req,res)=>{
 
     try {
         const department=await Department.findOne({_id:uuid});
-
-        const departmentExists=await Department.findOne({departmentName:departmentName});
-
-        
-        if (departmentExists) {
-            return res.status(403).json({
-                message:'Department Already exists',
-            });
-        }
-
 
         department.departmentName=departmentName;
         department.sessionDuration=session_lenght;
