@@ -1,4 +1,4 @@
-const {Department} =require("../../models/Departments");
+const {Department} =require("../../models/departments");
 
 const registerDepartment=async(req,res)=>{
     const {departmentName,session_lenght,fees}=req.body;
