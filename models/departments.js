@@ -1,5 +1,6 @@
 "use strict";
-import mongoose, { Schema } from "mongoose";
+const mongoose=require("mongoose");
+const { Schema }=require("mongoose");
 const Department = mongoose.model(
     "departments",
     new Schema({
