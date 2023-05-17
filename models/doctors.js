@@ -4,9 +4,6 @@ const { Schema }=require("mongoose");
 const Doctor = mongoose.model(
   "doctors",
   new Schema({
-    title:{
-      type:String,
-    },
     firstName: {
       type: String,
       required:true
@@ -39,25 +36,14 @@ const Doctor = mongoose.model(
     role:{
       type:String
     },
-    password: {
-      type: String,
-      required:true
-    },
-    passwordResetToken: {
-      type: String,
-      default: "",
-    },
+    
     profilePicture: {
       type: String,
       defaultValue:"",
     },
-    accountActivationToken:{
-      type: String,
-      default: "",
-    },
-    active:{
-      type:Boolean,
-      default:false
+    availableDays: {
+      type: [String], 
+      required: true,
     },
     createdAt:{
       type:String
