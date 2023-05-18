@@ -63,7 +63,7 @@ const createAppointment=async(req,res)=>{
             email,
             phone,
             doctorId:doctor._id,
-            doctorName:doctor.title + doctor.firstName + doctor.lastName,
+            doctorName:doctor.firstName + doctor.lastName,
             department:doctor.departmentName,
             sessionDate,
             sessionTime,
