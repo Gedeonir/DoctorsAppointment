@@ -42,7 +42,7 @@ const Doctor = mongoose.model(
       defaultValue:"",
     },
     availableDays: {
-      type: [String], 
+      type: String, 
       required: true,
     },
     createdAt:{
