@@ -1,11 +1,11 @@
 const {Department} =require("../../models/departments");
 
 const registerDepartment=async(req,res)=>{
-    const {departmentName,session_lenght,fees}=req.body;
+    const {departmentName,session_lenght}=req.body;
     try {
         const department=await Department.findOne({departmentName:departmentName});
 
-        if (!departmentName||!session_lenght||!fees) {
+        if (!departmentName||!session_lenght) {
             return res.status(400).json({
                 message:"All fields are required"
             });
@@ -19,7 +19,6 @@ const registerDepartment=async(req,res)=>{
 
         const newDepartment=await Department.create({
             departmentName:departmentName,
-            fees:fees,
             sessionDuration:session_lenght
         })
 
