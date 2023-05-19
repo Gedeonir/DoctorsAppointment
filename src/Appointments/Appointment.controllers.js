@@ -189,9 +189,9 @@ const appointmentCheckin=async(req,res)=>{
         await getAppointment.save();
 
         const data	=	{
-            'recipients':`${appointment.phone}`,
+            'recipients':`${getAppointment.phone}`,
             'message':`
-            Your appoinment ${appointment.document_id} has been confirmed, Thank you for parterning with us! See you then!`,	
+            Your appoinment ${getAppointment.document_id} has been confirmed, Thank you for parterning with us! See you then!`,	
             'sender':'+250780689938'
         }
           
