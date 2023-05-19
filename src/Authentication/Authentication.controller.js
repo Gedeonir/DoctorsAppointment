@@ -67,7 +67,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
 
     //3)Send it to User's email
-    const resetURL = `http://localhost:${process.env.PORT}/api/v1/users/resetpassword/${Token}`;
+    const resetURL = `${process.env.BACKEND_URL}/users/resetpassword/${Token}`;
 
     const message = `Forgot your password! please click here:${resetURL}. to reset your password.\n If you didn't forget your password please ignore this email.`;
 
