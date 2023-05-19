@@ -34,7 +34,7 @@ const createAppointment=async(req,res)=>{
             });
         }
 
-        const appoinment=await Appointment.findOne({department:doctor.departmentName,sessionTime:sessionTime,sessionDate:sessionDate})
+        const appoinment=await Appointment.findOne({sessionTime:sessionTime,sessionDate:sessionDate})
 
         const {valid, reason, validators} = await isEmailValid(email);
 
