@@ -8,5 +8,5 @@ const router = express.Router();
 router.post("/send_appointment/:doctorId",createAppointment)
 router.get("/",getAllAppoinments);
 router.get("/:appointmentId",getOneAppoinment);
-router.get("/:document_id/confirm",appointmentCheckin);
+router.patch("/:appointmentId/confirm",appointmentCheckin);
 module.exports=router;

@@ -88,7 +88,7 @@ const createAppointment=async(req,res)=>{
         // message,
         // });
 
-        const URL=`${process.env.BACKEND_URL}/appointments/${saveAppoinment.document_id}/confirm`
+        const URL=`${process.env.BACKEND_URL}/appointments/${saveAppoinment._id}/confirm`
 
         const data	=	{
             'recipients':`${saveAppoinment.phone}`,
@@ -176,17 +176,17 @@ const getOneAppoinment=async(req,res)=>{
 }
 
 const appointmentCheckin=async(req,res)=>{
-    const document_id=req.params.document_id
+    const appointmentId=req.params.appointmentId
     try {
-        const appointment=await Appointment.findOne({document_id:document_id});
-        if (!appointment) {
+        const getAppointment=await Appointment.findOne({_id:appointmentId});
+        if (!getAppointment) {
             return res.status(404).json({
                 message:"Oops,no such appointment not found"
             })
         }
 
-        appointment.status="CONFIRMED"
-        await appointment.save();
+        getAppointment.status="CONFIRMED";
+        await getAppointment.save();
 
         const data	=	{
             'recipients':`${appointment.phone}`,
@@ -221,11 +221,14 @@ const appointmentCheckin=async(req,res)=>{
 
 
         return res.status(200).json({
-            messsage:"Appointment confirmed"
+            messsage:"Appointment confirmed",
+            getAppointment,
+            appointmentId
         })
     } catch (error) {
-        return res.status(200).json({
-            message:"Unable to confirm appointment"
+        return res.status(500).json({
+            message:"Unable to confirm appointment",
+            error
         })
     }
 }
