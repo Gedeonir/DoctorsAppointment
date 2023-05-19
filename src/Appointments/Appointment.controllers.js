@@ -77,23 +77,25 @@ const createAppointment=async(req,res)=>{
         })
 
         
-        const message = `
-        Your appoinment request received succesfully, Your document code is ${saveAppoinment.document_id}. Keep it safe as it will be used to search for your appoinment document.
-        `;
+        // const message = `
+        // Your appoinment request received succesfully, Your document code is ${saveAppoinment.document_id}. Keep it safe as it will be used to search for your appoinment document.
+        // `;
 
         
-        await sendEmail({
-        email: saveAppoinment.email,
-        subject: "Appointment feedbacks.",
-        message,
-        });
+        // await sendEmail({
+        // email: saveAppoinment.email,
+        // subject: "Appointment feedbacks.",
+        // message,
+        // });
+
+        const URL=`${process.env.BACKEND_URL}/appointments/${saveAppoinment.document_id}/confirm`
 
         const data	=	{
             'recipients':`${saveAppoinment.phone}`,
             'message':`
             Your appoinment request received succesfully, Department:${saveAppoinment.department}, Doctor:${saveAppoinment.doctorName}, On:${saveAppoinment.sessionDate},At:${saveAppoinment.sessionTime}
             
-            Your document code is ${saveAppoinment.document_id}.Keep it safe as it will be used to search for your appoinment document.`,	
+            Your document code is ${saveAppoinment.document_id}.Keep it safe as it will be used to search for your appoinment document. click this link to confirm your appointment ${URL}`,	
             'sender':'+250780689938'
         }
           
@@ -174,124 +176,66 @@ const getOneAppoinment=async(req,res)=>{
 }
 
 const appointmentCheckin=async(req,res)=>{
-    const appointment_id=req.params.ap_id
+    const document_id=req.params.document_id
     try {
-        const appointment=await Appointment.findOne({_id:appointment_id});
-        if (appointment) {
+        const appointment=await Appointment.findOne({document_id:document_id});
+        if (!appointment) {
             return res.status(404).json({
-                message:"Appointment not found"
+                message:"Oops,no such appointment not found"
             })
         }
 
-        appointment.status="Checked In"
+        appointment.status="CONFIRMED"
         await appointment.save();
-        return res.status(200).json({
-            messsage:"Check in confirmed"
-        })
-    } catch (error) {
-        return res.status(200).json({
-            message:"Unable to check in appointment"
-        })
-    }
-}
 
-const sendSMS=async(req,res)=>{
-    // const data	=	{
-    //     'recipients':`0780689938`,
-    //     'message'	:`Your appoinment request received succesfully,
-    //         Department:${saveAppoinment.department}
-    //         Doctor:${saveAppoinment.doctorName}
-    //         On:${saveAppoinment.sessionDate}
-    //         At:${saveAppoinment.sessionTime}
-
-    //     Your document code is ${saveAppoinment.document_id}. 
-    
-    //     Keep it safe as it will be used to search for your appoinment document.`,	
-    //     'sender':'+250780689938'
-    // }
-
-    // const requestOptions = {
-    //     method: 'POST',
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': 'Basic ' + btoa(process.env.SMS_USERNAME + ':' + process.env.SMS_PASSWORD)
-    //     }
-    //   };
-      
-    //   fetch(process.env.SMS_URL, requestOptions)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       // Handle the response data
-    //       return res.status(200).json({
-    //         message:"Data",
-    //         data
-    //     })
-    //     })
-    //     .catch(error => {
-    //       // Handle any errors
-    //       return res.status(500).json({
-    //         message:"error",
-    //         error
-    //     })
-    //     });
-
-
-    const data = {
-        sender: '+250780689938',
-        recipients: '0780689938',
-        message: 'hello world'
-      };
-      
-      const url = process.env.SMS_URL;
-      const username = process.env.SMS_USERNAME;
-      const password = process.env.SMS_PASSWORD;
-      
-      const requestOptions = {
+        const data	=	{
+            'recipients':`${appointment.phone}`,
+            'message':`
+            Your appoinment ${appointment.document_id} has been confirmed, Thank you for parterning with us! See you then!`,	
+            'sender':'+250780689938'
+        }
+          
+        const url = process.env.SMS_URL;
+        const username = process.env.SMS_USERNAME;
+        const password = process.env.SMS_PASSWORD;
+        
+        const requestOptions = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic ' + btoa(username + ':' + password)
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + btoa(username + ':' + password)
         },
         body: new URLSearchParams(data)
-      };
-      
-      fetch(url, requestOptions)
+        };
+
+        fetch(url, requestOptions)
         .then(response => Promise.all([response.json(), response.status]))
         .then(([data, httpCode]) => {
           // Handle the response data and HTTP code
-          console.log(data);
-          console.log(httpCode);
-            return res.status(200).json({
-                httpCode,
-                data
-            })
+          console.log("SMS sent");
         })
         .catch(error => {
           // Handle any errors
           console.error(error);
-            return res.status(500).json({
-                message:"error",
-                error
-            })
         });
-    
-    // Department:${saveAppoinment.department}
-    // Doctor:${saveAppoinment.doctorName}
-    // On:${saveAppoinment.sessionDate}
-    // At:${saveAppoinment.sessionTime}
 
-    // Your document code is ${saveAppoinment.document_id}. 
-    
-  
 
+        return res.status(200).json({
+            messsage:"Appointment confirmed"
+        })
+    } catch (error) {
+        return res.status(200).json({
+            message:"Unable to confirm appointment"
+        })
+    }
 }
+
+
 
 module.exports={
     createAppointment,
     getAllAppoinments,
     getOneAppoinment,
     appointmentCheckin,
-    sendSMS
 }
 
